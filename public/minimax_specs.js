@@ -12,7 +12,7 @@ var heuristic = minimaxLib.heuristic;
 //The function heuristic takes as input
 //1. An instance of State -- that is, a description of the current state of the board.
 //2. The current player who is the maximizing player -- the one who is currently
-//   trying to maximize the score, unlike the other who is trying to minimize. 
+//   trying to maximize the score, unlike the other who is trying to minimize.
 
 describe("Testing some basic functionality for the heuristics", function(){
 
@@ -82,6 +82,37 @@ describe("Testing some basic functionality for the heuristics", function(){
 		expect(lower < higher).to.equal(true);
 	});
 
+	it("It returns 100 when 'x' has four in a row", function(){
+		//Make a new game state
+		var s = new State();
+		s = s.move(0)
+		s = s.move(1)
+		s = s.move(0)
+		s = s.move(3)
+		s = s.move(0)
+		s = s.move(5)
+		s = s.move(0)
+		var winner = heuristic(s, 'x');
+		expect(typeof winner == 'number').to.equal(true);
+		expect(winner).to.equal(100);
+	});
+
+	it("It returns -100 when 'o' has four in a row", function(){
+		//Make a new game state
+		var s = new State();
+		s = s.move(1)
+		s = s.move(0)
+		s = s.move(1)
+		s = s.move(0)
+		s = s.move(3)
+		s = s.move(0)
+		s = s.move(5)
+		s = s.move(0)
+		var looooser = heuristic(s, 'x');
+		expect(typeof looooser == 'number').to.equal(true);
+		expect(looooser).to.equal(-100);
+	});
+
 });
 
 describe('Testing some basic functions in the minimax evaluation function', function(){
@@ -105,8 +136,8 @@ describe('Testing some basic functions in the minimax evaluation function', func
 	it('Also returns simply the value of the heuristic function when there are no moves left to make', function(){
 		for(var x = 0; x < 5; x++){
 			//Make a new game state, with a board height of 1 so
-			//that s.nextStates or s.legalMoves returns an array 
-			//of length zero after we've filled the first 
+			//that s.nextStates or s.legalMoves returns an array
+			//of length zero after we've filled the first
 			//and last row entirely.
 			var s = new State({height: 1});
 			s = s.move(0)
@@ -124,8 +155,17 @@ describe('Testing some basic functions in the minimax evaluation function', func
 		}
 	});
 
-	it("It returns values when there's depth involved", function(){
+	it("doesn't throw an error for a contrived state", function(){
 
+		var s = new State();
+		s = s.move(2);
+		//console.log( heuristic(s, 'o') );
+		//console.log( minimax( s, 1, 'o'));
+
+	});
+
+	it("It returns values when there's depth involved", function(){
+  	//console.log("NOUS SOMMES ICI!!!");
 		for(var x = 0; x < 10; x++){
 			var s = new State();
 			var val = minimax(s, Math.floor(Math.random()*2), 'x');
