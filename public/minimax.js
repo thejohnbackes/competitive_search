@@ -95,8 +95,8 @@
 		var minimizingPlayer = maximizingPlayer === 'x' ? 'o' : 'x';
 		try{
 			var numLines = {
-				min: state.numLines(2, minimizingPlayer)+state.numLines(3, minimizingPlayer)+state.numLines(4,minimizingPlayer)^4,
-				max: state.numLines(2, maximizingPlayer)+state.numLines(3, maximizingPlayer)+state.numLines(4,maximizingPlayer)^4
+				min: state.numLines(2, minimizingPlayer)+state.numLines(3, minimizingPlayer)+Math.pow(state.numLines(4,minimizingPlayer),4),
+				max: state.numLines(2, maximizingPlayer)+state.numLines(3, maximizingPlayer)+Math.pow(state.numLines(4,maximizingPlayer),4)
 			};
 
 			var stateValue = numLines.max - numLines.min;
